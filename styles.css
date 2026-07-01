@@ -1,18 +1,16 @@
 body { font-family: 'Segoe UI', sans-serif; background: #e9ecef; text-align: center; padding: 20px; }
 
-/* Dùng #app #menu để đảm bảo CSS tìm đúng đối tượng */
+/* 1. Menu chọn bài (Dạng lưới 4 cột) */
 #app #menu {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 15px; 
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
     max-width: 800px;
     margin: 20px auto;
 }
 
+/* 2. Định dạng chung cho mọi nút */
 button {
-    display: block;
-    width: 100%;
-    margin: 5px 0;
     padding: 15px;
     font-size: 16px;
     cursor: pointer;
@@ -24,6 +22,16 @@ button {
 }
 button:hover { background: #0056b3; }
 
+/* 3. Khu vực chơi game (Chứa các nút đáp án) */
 #game-container { max-width: 400px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+
+/* Điều chỉnh nút đáp án nằm trong game-container */
+#options button {
+    display: block;
+    width: 100%;
+    margin: 10px 0; /* Tạo khoảng cách dọc cho các đáp án */
+}
+
+/* Modal kết quả */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10; }
 .modal-content { background: white; padding: 30px; border-radius: 15px; text-align: center; width: 80%; max-width: 300px; }
