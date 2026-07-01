@@ -40,7 +40,7 @@ function startLesson(lessonId) {
     loadQuestion();
 }
 
-// 3. Tải câu hỏi (Bản chuẩn)
+// 3. Tải câu hỏi (Sửa lỗi hiển thị đủ 4 đáp án và chỉ lấy từ bài đang học)
 function loadQuestion() {
     if (wordQueue.length === 0) {
         showResult();
@@ -49,36 +49,29 @@ function loadQuestion() {
     const current = wordQueue[0];
     document.getElementById('question').innerText = `Từ "${current.word}" nghĩa là gì?`;
     
-    // 1. Lấy tất cả nghĩa có trong bài học hiện tại
+    // 1. Tạo danh sách nghĩa của bài học này
     let allMeaningsInLesson = wordQueue.map(w => w.meaning);
     
-    // 2. Loại bỏ nghĩa trùng lặp trong bài để danh sách đáp án "sạch"
-    let uniqueMeanings = [...new Set(allMeaningsInLesson)];
-    
-    // 3. Đảm bảo đáp án đúng luôn nằm trong danh sách
+    // 2. Tạo danh sách đáp án (luôn bắt đầu bằng đáp án đúng)
     let options = [current.meaning];
     
-    // 4. Lấy thêm các nghĩa khác từ chính bài học đó
-    let pool = uniqueMeanings.filter(m => m !== current.meaning);
-    pool.sort(() => Math.random() - 0.5);
-    
-    while(options.length < 4 && pool.length > 0) {
-        options.push(pool.pop());
+    // 3. Ép buộc phải có đủ 4 đáp án
+    while(options.length < 4) {
+        // Lấy ngẫu nhiên một nghĩa từ bài học
+        let rand = allMeaningsInLesson[Math.floor(Math.random() * allMeaningsInLesson.length)];
+        
+        // Chỉ thêm vào nếu đáp án chưa tồn tại trong danh sách để tránh trùng
+        if (!options.includes(rand)) {
+            options.push(rand);
+        } else {
+            // Nếu đã lấy hết nghĩa trong bài mà vẫn chưa đủ 4, 
+            // lấy thêm từ allWords tổng thể để đảm bảo luôn đủ 4 nút
+            let fallback = allWords[Math.floor(Math.random() * allWords.length)].meaning;
+            if (!options.includes(fallback)) {
+                options.push(fallback);
+            }
+        }
     }
-    
-    // 5. Trộn các đáp án trước khi hiển thị
-    options.sort(() => Math.random() - 0.5);
-    
-    // 6. Hiển thị lên màn hình
-    const optionsEl = document.getElementById('options');
-    optionsEl.innerHTML = '';
-    options.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.innerText = opt;
-        btn.onclick = () => checkAnswer(opt, current.meaning, btn);
-        optionsEl.appendChild(btn);
-    });
-}
     
     // 4. Trộn vị trí các đáp án
     options.sort(() => Math.random() - 0.5);
