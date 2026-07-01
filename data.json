@@ -1,3 +1,4 @@
+
 [
     {"lesson_id": 12, "word": "trên", "meaning": "上面"},
     {"lesson_id": 12, "word": "trong", "meaning": "里面"},
@@ -18,7 +19,6 @@
     {"lesson_id": 12, "word": "không được", "meaning": "不可以、不能"},
     {"lesson_id": 12, "word": "cấm", "meaning": "禁止"},
     {"lesson_id": 12, "word": "đừng", "meaning": "别、不要"},
-    
     {"lesson_id": "东西", "word": "đồng hồ", "meaning": "手表、钟表"},
     {"lesson_id": "东西", "word": "bình hoa", "meaning": "花瓶"},
     {"lesson_id": "东西", "word": "tường", "meaning": "墙"},
@@ -33,7 +33,6 @@
     {"lesson_id": "东西", "word": "bút", "meaning": "笔"},
     {"lesson_id": "东西", "word": "máy tính", "meaning": "电脑"},
     {"lesson_id": "东西", "word": "điện thoại", "meaning": "手机"},
-    
     {"lesson_id": "动作", "word": "uống bia", "meaning": "喝啤酒"},
     {"lesson_id": "动作", "word": "thức khuya", "meaning": "熬夜"},
     {"lesson_id": "动作", "word": "ăn kem", "meaning": "吃冰淇淋"},
@@ -47,7 +46,6 @@
     {"lesson_id": "动作", "word": "đi ngủ", "meaning": "去睡觉"},
     {"lesson_id": "动作", "word": "đi dạo", "meaning": "散步"},
     {"lesson_id": "动作", "word": "nói chuyện", "meaning": "聊天、说话"},
-    
     {"lesson_id": "形容词", "word": "nặng", "meaning": "重"},
     {"lesson_id": "形容词", "word": "cao", "meaning": "高"},
     {"lesson_id": "形容词", "word": "dài", "meaning": "长"},
@@ -65,7 +63,6 @@
     {"lesson_id": "形容词", "word": "đẹp gái", "meaning": "漂亮"},
     {"lesson_id": "形容词", "word": "xấu", "meaning": "丑"},
     {"lesson_id": "形容词", "word": "xa", "meaning": "远"},
-    
     {"lesson_id": "单位", "word": "m²", "meaning": "mét vuông"},
     {"lesson_id": "单位", "word": "kg", "meaning": "ki lô gam"},
     {"lesson_id": "单位", "word": "km", "meaning": "ki lô mét"},
@@ -73,7 +70,6 @@
     {"lesson_id": "单位", "word": "m", "meaning": "mét"},
     {"lesson_id": "单位", "word": "ha", "meaning": "héc ta (公顷)"},
     {"lesson_id": "单位", "word": "m³", "meaning": "mét khối"},
-    
     {"lesson_id": "动物", "word": "con mèo", "meaning": "猫"},
     {"lesson_id": "动物", "word": "con chó", "meaning": "狗"},
     {"lesson_id": "动物", "word": "con gà", "meaning": "鸡"},
