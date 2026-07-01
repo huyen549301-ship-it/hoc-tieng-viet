@@ -12,15 +12,31 @@ async function loadData() {
 }
 loadData();
 
-// 2. Bắt đầu bài học
+// 2. Bắt đầu bài học - Cập nhật để lọc đúng dữ liệu từng bài
 function startLesson(lessonId) {
-    wordQueue = allWords.filter(w => w.lesson_id === lessonId).sort(() => Math.random() - 0.5);
-    if(wordQueue.length === 0) { alert("Bài học chưa có dữ liệu!"); return; }
+    // Lọc dữ liệu: Chỉ lấy những từ có lesson_id trùng với lessonId truyền vào
+    // Lưu ý: Nếu lessonId là số (1, 2, 3...) thì JSON cũng phải là số
+    // Nếu lessonId là chữ ('单位'...) thì JSON cũng phải là chữ
+    wordQueue = allWords.filter(w => w.lesson_id === lessonId);
     
+    // Kiểm tra nếu bài học không có dữ liệu
+    if(wordQueue.length === 0) { 
+        alert("Bài học này chưa có dữ liệu!"); 
+        return; 
+    }
+    
+    // Trộn ngẫu nhiên danh sách từ của bài đó
+    wordQueue.sort(() => Math.random() - 0.5);
+    
+    // Ẩn menu, hiện game
     document.getElementById('menu').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
+    
+    // Reset các biến đếm
     totalAttempts = 0;
     correctAttempts = 0;
+    
+    // Bắt đầu tải câu hỏi đầu tiên
     loadQuestion();
 }
 
