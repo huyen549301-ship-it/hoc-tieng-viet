@@ -99,6 +99,9 @@ function showResult() {
     const percent = Math.round((correctAttempts / totalAttempts) * 100);
     const modal = document.createElement('div');
     modal.className = 'modal';
+    // Thêm dòng này để ghi đè thuộc tính display từ file CSS
+    modal.style.display = 'flex'; 
+    
     modal.innerHTML = `
         <div class="modal-content">
             <h2>Hoàn thành!</h2>
