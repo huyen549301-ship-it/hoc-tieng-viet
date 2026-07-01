@@ -40,7 +40,7 @@ function startLesson(lessonId) {
     loadQuestion();
 }
 
-// 3. Tải câu hỏi (Cách tối ưu để luôn có đủ 4 đáp án)
+// 3. Tải câu hỏi (Bản chuẩn)
 function loadQuestion() {
     if (wordQueue.length === 0) {
         showResult();
@@ -58,9 +58,9 @@ function loadQuestion() {
     // 3. Đảm bảo đáp án đúng luôn nằm trong danh sách
     let options = [current.meaning];
     
-    // 4. Lấy thêm các nghĩa khác từ chính bài học đó cho đến khi đủ 4 hoặc hết nghĩa
+    // 4. Lấy thêm các nghĩa khác từ chính bài học đó
     let pool = uniqueMeanings.filter(m => m !== current.meaning);
-    pool.sort(() => Math.random() - 0.5); // Trộn ngẫu nhiên
+    pool.sort(() => Math.random() - 0.5);
     
     while(options.length < 4 && pool.length > 0) {
         options.push(pool.pop());
@@ -69,6 +69,7 @@ function loadQuestion() {
     // 5. Trộn các đáp án trước khi hiển thị
     options.sort(() => Math.random() - 0.5);
     
+    // 6. Hiển thị lên màn hình
     const optionsEl = document.getElementById('options');
     optionsEl.innerHTML = '';
     options.forEach(opt => {
