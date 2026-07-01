@@ -1,21 +1,36 @@
-// Thay vì khai báo mảng cứng, chúng ta khai báo biến toàn cục
 let allWords = [];
 
-// Hàm khởi tạo để tải dữ liệu từ file JSON
 async function loadData() {
-    try {
-        const response = await fetch('data.json');
-        if (!response.ok) throw new Error('Không thể tải file dữ liệu');
-        allWords = await response.json();
-        console.log("Đã tải dữ liệu thành công:", allWords);
-    } catch (error) {
-        console.error("Lỗi:", error);
-        alert("Không tìm thấy file data.json, hãy đảm bảo file nằm cùng thư mục với index.html");
-    }
+    const response = await fetch('data.json');
+    allWords = await response.json();
+    console.log("Dữ liệu đã tải:", allWords);
 }
 
-// Gọi hàm này ngay khi trang web được tải xong
+// Gọi loadData ngay khi chạy
 loadData();
+
+let wordQueue = [];
+let totalAttempts = 0;
+
+function startLesson(lessonId) {
+    if (allWords.length === 0) {
+        alert("Đang tải dữ liệu, vui lòng đợi 1 giây rồi bấm lại!");
+        return;
+    }
+    // Lọc theo ID
+    wordQueue = allWords.filter(w => w.lesson_id === lessonId).sort(() => Math.random() - 0.5);
+    
+    if(wordQueue.length === 0) { 
+        alert("Bài học này chưa có từ vựng nào!"); 
+        return; 
+    }
+    
+    document.getElementById('menu').style.display = 'none';
+    document.getElementById('game-container').style.display = 'block';
+    totalAttempts = 0;
+    loadQuestion();
+}
+// ... (các hàm còn lại giữ nguyên)
 
 let wordQueue = [];
 let totalAttempts = 0;
