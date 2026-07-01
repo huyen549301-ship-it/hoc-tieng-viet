@@ -30,8 +30,8 @@ button:hover { background: #0056b3; }
     display: block;
     width: 100%;
     margin: 20px auto; /* Tạo khoảng cách dọc cho các đáp án */
-}
 
+    /* Trong styles.css */
 .modal { 
     position: fixed; 
     top: 0; 
@@ -39,9 +39,13 @@ button:hover { background: #0056b3; }
     width: 100%; 
     height: 100%; 
     background: rgba(0,0,0,0.5); 
-    display: none; /* THAY ĐỔI Ở ĐÂY: từ flex thành none */
+    display: none; /* Mặc định ẩn */
     align-items: center; 
     justify-content: center; 
     z-index: 10; 
 }
-.modal-content { background: white; padding: 30px; border-radius: 15px; text-align: center; width: 80%; max-width: 300px; }
+
+/* Thêm class này để dùng trong JS */
+.modal.show {
+    display: flex !important;
+}
