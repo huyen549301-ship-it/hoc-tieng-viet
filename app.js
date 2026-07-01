@@ -10,13 +10,31 @@ const words = [
 ];
 
 let wordQueue = [...words].sort(() => Math.random() - 0.5);
+let totalAttempts = 0;
+let correctAttempts = 0;
+const totalQuestions = words.length;
+
 const questionEl = document.getElementById('question');
 const optionsEl = document.getElementById('options');
 
+function showResult() {
+    const percentage = Math.round((totalQuestions / totalAttempts) * 100);
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h2>Kết quả bài học</h2>
+            <p>Bạn đã hoàn thành với tỷ lệ chính xác dựa trên nỗ lực: <b>${percentage}%</b></p>
+            <button onclick="location.reload()">Học lại từ đầu</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
 function loadQuestion() {
     if (wordQueue.length === 0) {
-        alert("Tuyệt vời! Bạn đã hoàn thành bài học.");
-        wordQueue = [...words].sort(() => Math.random() - 0.5);
+        showResult();
+        return;
     }
     
     const current = wordQueue[0];
@@ -39,18 +57,16 @@ function loadQuestion() {
 }
 
 function checkAnswer(selected, correct, btn) {
+    totalAttempts++;
     if (selected === correct) {
         btn.style.backgroundColor = "#4CAF50";
         setTimeout(() => {
             wordQueue.shift();
             loadQuestion();
-        }, 500);
+        }, 300);
     } else {
         btn.style.backgroundColor = "#f44336";
-        alert('Sai rồi! Thử lại câu này sau nhé.');
-        let failedWord = wordQueue.shift();
-        wordQueue.push(failedWord);
-        loadQuestion();
+        setTimeout(() => { btn.style.backgroundColor = "#007bff"; }, 500);
     }
 }
 
