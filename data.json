@@ -57,7 +57,6 @@
     {"lesson_id": "形容词", "word": "nhỏ / bé", "meaning": "小"},
     {"lesson_id": "形容词", "word": "nhiều", "meaning": "多"},
     {"lesson_id": "形容词", "word": "ít", "meaning": "少"},
-    {"lesson_id": "形容词", "word": "xa, "meaning": "远"},
     {"lesson_id": "形容词", "word": "gần", "meaning": "近"},
     {"lesson_id": "形容词", "word": "gầy", "meaning": "瘦"},
     {"lesson_id": "形容词", "word": "béo / mập", "meaning": "胖"},
@@ -65,6 +64,7 @@
     {"lesson_id": "形容词", "word": "đẹp trai", "meaning": "帅"},
     {"lesson_id": "形容词", "word": "đẹp gái", "meaning": "漂亮"},
     {"lesson_id": "形容词", "word": "xấu", "meaning": "丑"},
+    {"lesson_id": "形容词", "word": "xa", "meaning": "远"},
     
     {"lesson_id": "单位", "word": "m²", "meaning": "mét vuông"},
     {"lesson_id": "单位", "word": "kg", "meaning": "ki lô gam"},
