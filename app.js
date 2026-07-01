@@ -1,10 +1,21 @@
-// Dữ liệu giả lập (Sau này có thể thay bằng fetch để đọc từ file data.json)
-const allWords = [
-    {"lesson_id": 1, "word": "trên", "meaning": "上面"},
-    {"lesson_id": 1, "word": "trong", "meaning": "里面"},
-    {"lesson_id": 2, "word": "học viên", "meaning": "学员"},
-    {"lesson_id": 2, "word": "lớp", "meaning": "班级"}
-];
+// Thay vì khai báo mảng cứng, chúng ta khai báo biến toàn cục
+let allWords = [];
+
+// Hàm khởi tạo để tải dữ liệu từ file JSON
+async function loadData() {
+    try {
+        const response = await fetch('data.json');
+        if (!response.ok) throw new Error('Không thể tải file dữ liệu');
+        allWords = await response.json();
+        console.log("Đã tải dữ liệu thành công:", allWords);
+    } catch (error) {
+        console.error("Lỗi:", error);
+        alert("Không tìm thấy file data.json, hãy đảm bảo file nằm cùng thư mục với index.html");
+    }
+}
+
+// Gọi hàm này ngay khi trang web được tải xong
+loadData();
 
 let wordQueue = [];
 let totalAttempts = 0;
