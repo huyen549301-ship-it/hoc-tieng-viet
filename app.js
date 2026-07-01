@@ -1,23 +1,27 @@
 let allWords = [];
 
+// 1. Tải dữ liệu ngay khi khởi động
 async function loadData() {
-    const response = await fetch('data.json');
-    allWords = await response.json();
-    console.log("Dữ liệu đã tải:", allWords);
+    try {
+        const response = await fetch('data.json');
+        allWords = await response.json();
+    } catch (error) {
+        alert("Lỗi tải dữ liệu: " + error.message);
+    }
 }
-
-// Gọi loadData ngay khi chạy
 loadData();
 
 let wordQueue = [];
 let totalAttempts = 0;
 
+// 2. Hàm bắt đầu bài học
 function startLesson(lessonId) {
     if (allWords.length === 0) {
         alert("Đang tải dữ liệu, vui lòng đợi 1 giây rồi bấm lại!");
         return;
     }
-    // Lọc theo ID
+    
+    // Lọc từ vựng theo ID
     wordQueue = allWords.filter(w => w.lesson_id === lessonId).sort(() => Math.random() - 0.5);
     
     if(wordQueue.length === 0) { 
@@ -30,22 +34,8 @@ function startLesson(lessonId) {
     totalAttempts = 0;
     loadQuestion();
 }
-// ... (các hàm còn lại giữ nguyên)
 
-let wordQueue = [];
-let totalAttempts = 0;
-
-function startLesson(lessonId) {
-    // Lọc từ vựng theo bài
-    wordQueue = allWords.filter(w => w.lesson_id === lessonId).sort(() => Math.random() - 0.5);
-    if(wordQueue.length === 0) { alert("Bài học chưa có dữ liệu!"); return; }
-    
-    document.getElementById('menu').style.display = 'none';
-    document.getElementById('game-container').style.display = 'block';
-    totalAttempts = 0;
-    loadQuestion();
-}
-
+// 3. Hàm hiển thị câu hỏi
 function loadQuestion() {
     if (wordQueue.length === 0) {
         showResult();
@@ -72,25 +62,26 @@ function loadQuestion() {
     });
 }
 
+// 4. Hàm kiểm tra đáp án
 function checkAnswer(selected, correct, btn) {
     totalAttempts++;
     if (selected === correct) {
         btn.style.backgroundColor = "#4CAF50";
-        setTimeout(() => { wordQueue.shift(); loadQuestion(); }, 500);
+        setTimeout(() => { 
+            wordQueue.shift(); 
+            loadQuestion(); 
+        }, 500);
     } else {
         btn.style.backgroundColor = "#f44336";
         setTimeout(() => { btn.style.backgroundColor = "#007bff"; }, 500);
     }
 }
 
+// 5. Hàm kết quả
 function showResult() {
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <h2>Hoàn thành!</h2>
-            <button onclick="location.reload()">Quay lại chọn bài</button>
-        </div>
+    const gameContainer = document.getElementById('game-container');
+    gameContainer.innerHTML = `
+        <h2>Hoàn thành!</h2>
+        <button onclick="location.reload()">Quay lại chọn bài</button>
     `;
-    document.body.appendChild(modal);
 }
