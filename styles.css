@@ -31,9 +31,7 @@ button:hover { background: #0056b3; }
     width: 100%;
     margin: 20px auto; /* Tạo khoảng cách dọc cho các đáp án */
 
-/* ... các dòng code phía trên ... */
-
-/* Bắt đầu dán vào từ dòng 34: */
+/* 4. Modal kết quả */
 .modal { 
     position: fixed; 
     top: 0; 
