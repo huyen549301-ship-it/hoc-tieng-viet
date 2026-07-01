@@ -1,40 +1,37 @@
 let allWords = [];
+let wordQueue = [];
+let totalAttempts = 0;
+let correctAttempts = 0;
 
+// 1. Tải dữ liệu
 async function loadData() {
     try {
         const response = await fetch('data.json');
-        if (!response.ok) throw new Error('Không tìm thấy file');
         allWords = await response.json();
-        console.log("Số lượng từ đã tải:", allWords.length); // Kiểm tra trong F12 Console
-    } catch (e) { 
-        alert("Lỗi tải data.json: " + e.message); 
-    }
+    } catch (e) { alert("Lỗi tải file data.json"); }
 }
 loadData();
 
-let wordQueue = [];
-
+// 2. Bắt đầu bài học
 function startLesson(lessonId) {
-    if (allWords.length === 0) { alert("Đang tải dữ liệu..."); return; }
-    
-    // Lọc từ vựng
     wordQueue = allWords.filter(w => w.lesson_id === lessonId).sort(() => Math.random() - 0.5);
-    
-    if(wordQueue.length === 0) { alert("Bài này chưa có từ!"); return; }
+    if(wordQueue.length === 0) { alert("Bài học chưa có dữ liệu!"); return; }
     
     document.getElementById('menu').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
+    totalAttempts = 0;
+    correctAttempts = 0;
     loadQuestion();
 }
 
+// 3. Tải câu hỏi
 function loadQuestion() {
     if (wordQueue.length === 0) {
-        alert("Hoàn thành bài!");
-        location.reload();
+        showResult();
         return;
     }
     const current = wordQueue[0];
-    document.getElementById('question').innerText = `Từ "${current.word}" có nghĩa là gì?`;
+    document.getElementById('question').innerText = `Từ "${current.word}" nghĩa là gì?`;
     
     let options = [current.meaning];
     while(options.length < 4) {
@@ -48,14 +45,35 @@ function loadQuestion() {
     options.forEach(opt => {
         const btn = document.createElement('button');
         btn.innerText = opt;
-        btn.onclick = () => {
-            if (opt === current.meaning) {
-                wordQueue.shift();
-                loadQuestion();
-            } else {
-                alert("Sai rồi, thử lại!");
-            }
-        };
+        btn.onclick = () => checkAnswer(opt, current.meaning, btn);
         optionsEl.appendChild(btn);
     });
+}
+
+// 4. Kiểm tra đáp án (có đổi màu đỏ/xanh)
+function checkAnswer(selected, correct, btn) {
+    totalAttempts++;
+    if (selected === correct) {
+        correctAttempts++;
+        btn.style.backgroundColor = "#4CAF50"; // Màu xanh
+        setTimeout(() => { wordQueue.shift(); loadQuestion(); }, 500);
+    } else {
+        btn.style.backgroundColor = "#f44336"; // Màu đỏ
+        setTimeout(() => { btn.style.backgroundColor = "#007bff"; }, 500);
+    }
+}
+
+// 5. Hiển thị bảng kết quả
+function showResult() {
+    const percent = Math.round((correctAttempts / totalAttempts) * 100);
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h2>Hoàn thành!</h2>
+            <p>Khả năng ghi nhớ: <b>${percent}%</b></p>
+            <button onclick="location.reload()">Quay lại chọn bài</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
 }
