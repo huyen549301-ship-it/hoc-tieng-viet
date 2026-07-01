@@ -1,20 +1,35 @@
+/* Thiết lập chung */
 body { font-family: 'Segoe UI', sans-serif; background: #e9ecef; text-align: center; padding: 20px; }
-#game-container { max-width: 400px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 
-/* Cấu trúc Grid cho menu */
+/* Khu vực Menu bài học - Chia 4 cột */
 #menu {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Chia thành 4 cột bằng nhau */
-    gap: 10px; /* Khoảng cách giữa các ô */
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 10px;
+    grid-template-columns: repeat(4, 1fr); /* Chia 4 cột bằng nhau */
+    gap: 15px; /* Khoảng cách giữa các nút */
+    max-width: 800px;
+    margin: 20px auto;
 }
 
-button { display: block; width: 100%; padding: 15px; font-size: 16px; cursor: pointer; border: none; border-radius: 8px; background: #007bff; color: white; transition: 0.3s; }
+/* Định dạng nút bấm */
+button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background: #007bff;
+    color: white;
+    transition: 0.3s;
+}
 button:hover { background: #0056b3; }
 
-/* Bảng kết quả */
+/* Khu vực chơi game */
+#game-container { max-width: 400px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+
+/* Bảng kết quả (Modal) */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10; }
 .modal-content { background: white; padding: 30px; border-radius: 15px; text-align: center; width: 80%; max-width: 300px; }
 .modal-content h2 { color: #333; }
