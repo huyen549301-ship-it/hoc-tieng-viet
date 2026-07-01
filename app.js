@@ -104,7 +104,5 @@ function showResult() {
     
     // Cập nhật nội dung
     resultText.innerHTML = `Khả năng ghi nhớ: <b>${percent}%</b>`;
-    
-    // Hiển thị nó bằng cách đổi display thành flex
-    modal.style.display = 'flex'; 
+    modal.classList.add('show');
 }
