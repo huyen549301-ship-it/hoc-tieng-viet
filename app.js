@@ -97,17 +97,14 @@ function checkAnswer(selected, correct, btn) {
 // 5. Hiển thị bảng kết quả
 function showResult() {
     const percent = Math.round((correctAttempts / totalAttempts) * 100);
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    // Thêm dòng này để ghi đè thuộc tính display từ file CSS
-    modal.style.display = 'flex'; 
     
-    modal.innerHTML = `
-        <div class="modal-content">
-            <h2>Hoàn thành!</h2>
-            <p>Khả năng ghi nhớ: <b>${percent}%</b></p>
-            <button onclick="location.reload()">Quay lại chọn bài</button>
-        </div>
-    `;
-    document.body.appendChild(modal);
+    // Lấy modal đã thêm trong HTML
+    const modal = document.getElementById('resultModal');
+    const resultText = document.getElementById('resultText');
+    
+    // Cập nhật nội dung
+    resultText.innerHTML = `Khả năng ghi nhớ: <b>${percent}%</b>`;
+    
+    // Hiển thị nó bằng cách đổi display thành flex
+    modal.style.display = 'flex'; 
 }
