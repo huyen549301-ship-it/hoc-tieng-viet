@@ -40,7 +40,7 @@ function startLesson(lessonId) {
     loadQuestion();
 }
 
-// 3. Tải câu hỏi (Chỉ lấy đáp án nhiễu trong cùng bài học)
+// 3. Tải câu hỏi (Chỉ lấy dữ liệu trong wordQueue)
 function loadQuestion() {
     if (wordQueue.length === 0) {
         showResult();
@@ -49,15 +49,21 @@ function loadQuestion() {
     const current = wordQueue[0];
     document.getElementById('question').innerText = `Từ "${current.word}" nghĩa là gì?`;
     
-    // Đảm bảo có ít nhất 4 từ trong bài để tạo 4 đáp án
-    // Nếu bài học ít hơn 4 từ, logic này vẫn hoạt động nhưng sẽ lấy trùng
+    // Lấy danh sách tất cả các nghĩa có trong BÀI ĐANG HỌC
+    let allMeaningsInLesson = wordQueue.map(w => w.meaning);
+    
     let options = [current.meaning];
     
+    // Chỉ lấy ngẫu nhiên từ danh sách nghĩa của bài học này
     while(options.length < 4) {
-        // Thay allWords bằng wordQueue để chỉ lấy từ trong cùng bài học
-        let rand = wordQueue[Math.floor(Math.random() * wordQueue.length)].meaning;
-        if (!options.includes(rand)) options.push(rand);
+        let rand = allMeaningsInLesson[Math.floor(Math.random() * allMeaningsInLesson.length)];
+        if (!options.includes(rand)) {
+            options.push(rand);
+        }
+        // Nếu bài học quá ít từ (dưới 4), thoát để tránh lặp vô tận
+        if (options.length === allMeaningsInLesson.length) break;
     }
+    
     options.sort(() => Math.random() - 0.5);
     
     const optionsEl = document.getElementById('options');
