@@ -50,16 +50,27 @@ function loadQuestion() {
     });
 }
 
-// 4. Kiểm tra đáp án (có đổi màu đỏ/xanh)
+// 4. Kiểm tra đáp án (Nếu sai, đưa từ đó xuống cuối danh sách)
 function checkAnswer(selected, correct, btn) {
     totalAttempts++;
     if (selected === correct) {
         correctAttempts++;
         btn.style.backgroundColor = "#4CAF50"; // Màu xanh
-        setTimeout(() => { wordQueue.shift(); loadQuestion(); }, 500);
+        // Trả lời đúng: Xóa từ khỏi hàng đợi và tải câu tiếp theo
+        setTimeout(() => { 
+            wordQueue.shift(); 
+            loadQuestion(); 
+        }, 500);
     } else {
         btn.style.backgroundColor = "#f44336"; // Màu đỏ
-        setTimeout(() => { btn.style.backgroundColor = "#007bff"; }, 500);
+        // Trả lời sai: Đưa từ hiện tại xuống cuối hàng đợi
+        const wrongWord = wordQueue.shift(); 
+        wordQueue.push(wrongWord); 
+        
+        setTimeout(() => { 
+            btn.style.backgroundColor = "#007bff"; 
+            loadQuestion(); // Tải lại câu tiếp theo (lúc này từ sai đã nằm ở cuối)
+        }, 500);
     }
 }
 
