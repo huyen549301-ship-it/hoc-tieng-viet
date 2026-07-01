@@ -1,7 +1,7 @@
 
 [
-    {"lesson_id": 1, "word": "trên", "meaning": "上面"},
-    {"lesson_id": 1, "word": "trong", "meaning": "里面"},
+    {"lesson_id": 12, "word": "trên", "meaning": "上面"},
+    {"lesson_id": 12, "word": "trong", "meaning": "里面"},
     {"lesson_id": 12, "word": "xong", "meaning": "完、完成"},
     {"lesson_id": 12, "word": "học viên", "meaning": "学员"},
     {"lesson_id": 12, "word": "bài bao nhiêu", "meaning": "第几课"},
