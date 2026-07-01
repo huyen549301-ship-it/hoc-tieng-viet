@@ -29,7 +29,7 @@ button:hover { background: #0056b3; }
 #options button {
     display: block;
     width: 100%;
-    margin: 10px 0; /* Tạo khoảng cách dọc cho các đáp án */
+    margin: 20px auto; /* Tạo khoảng cách dọc cho các đáp án */
 }
 
 /* Modal kết quả */
