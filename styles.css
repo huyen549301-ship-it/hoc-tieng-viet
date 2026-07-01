@@ -12,7 +12,7 @@ body { font-family: 'Segoe UI', sans-serif; background: #e9ecef; text-align: cen
 button {
     display: block;
     width: 100%;
-    margin: 0;
+    margin: 5px 0;
     padding: 15px;
     font-size: 16px;
     cursor: pointer;
