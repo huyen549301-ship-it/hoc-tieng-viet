@@ -1,34 +1,23 @@
-const words = [
-    {"id": 1, "word": "trên", "meaning": "上面"}, {"id": 2, "word": "trong", "meaning": "里面"},
-    {"id": 3, "word": "xong", "meaning": "完、完成"}, {"id": 4, "word": "học viên", "meaning": "学员"},
-    {"id": 5, "word": "bài bao nhiêu", "meaning": "第几课"}, {"id": 6, "word": "lớp", "meaning": "班级"},
-    {"id": 7, "word": "Thái Lan", "meaning": "泰国"}, {"id": 8, "word": "cố gắng", "meaning": "努力"},
-    {"id": 9, "word": "dưới", "meaning": "下面"}, {"id": 10, "word": "ngoài", "meaning": "外面"},
-    {"id": 11, "word": "giữa", "meaning": "中间"}, {"id": 12, "word": "trước", "meaning": "前面"},
-    {"id": 13, "word": "sau", "meaning": "后面"}, {"id": 14, "word": "bên cạnh", "meaning": "旁边"},
-    {"id": 15, "word": "gần", "meaning": "附近"}
+// Dữ liệu giả lập (Sau này có thể thay bằng fetch để đọc từ file data.json)
+const allWords = [
+    {"lesson_id": 1, "word": "trên", "meaning": "上面"},
+    {"lesson_id": 1, "word": "trong", "meaning": "里面"},
+    {"lesson_id": 2, "word": "học viên", "meaning": "学员"},
+    {"lesson_id": 2, "word": "lớp", "meaning": "班级"}
 ];
 
-let wordQueue = [...words].sort(() => Math.random() - 0.5);
+let wordQueue = [];
 let totalAttempts = 0;
-let correctAttempts = 0;
-const totalQuestions = words.length;
 
-const questionEl = document.getElementById('question');
-const optionsEl = document.getElementById('options');
-
-function showResult() {
-    const percentage = Math.round((totalQuestions / totalAttempts) * 100);
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <h2>Kết quả bài học</h2>
-            <p>Bạn đã hoàn thành với tỷ lệ chính xác dựa trên nỗ lực: <b>${percentage}%</b></p>
-            <button onclick="location.reload()">Học lại từ đầu</button>
-        </div>
-    `;
-    document.body.appendChild(modal);
+function startLesson(lessonId) {
+    // Lọc từ vựng theo bài
+    wordQueue = allWords.filter(w => w.lesson_id === lessonId).sort(() => Math.random() - 0.5);
+    if(wordQueue.length === 0) { alert("Bài học chưa có dữ liệu!"); return; }
+    
+    document.getElementById('menu').style.display = 'none';
+    document.getElementById('game-container').style.display = 'block';
+    totalAttempts = 0;
+    loadQuestion();
 }
 
 function loadQuestion() {
@@ -38,15 +27,16 @@ function loadQuestion() {
     }
     
     const current = wordQueue[0];
-    questionEl.innerText = `Từ "${current.word}" có nghĩa là gì?`;
+    document.getElementById('question').innerText = `Từ "${current.word}" nghĩa là gì?`;
     
     let options = [current.meaning];
     while(options.length < 4) {
-        let rand = words[Math.floor(Math.random() * words.length)].meaning;
+        let rand = allWords[Math.floor(Math.random() * allWords.length)].meaning;
         if (!options.includes(rand)) options.push(rand);
     }
     options.sort(() => Math.random() - 0.5);
     
+    const optionsEl = document.getElementById('options');
     optionsEl.innerHTML = '';
     options.forEach(opt => {
         const btn = document.createElement('button');
@@ -60,14 +50,21 @@ function checkAnswer(selected, correct, btn) {
     totalAttempts++;
     if (selected === correct) {
         btn.style.backgroundColor = "#4CAF50";
-        setTimeout(() => {
-            wordQueue.shift();
-            loadQuestion();
-        }, 300);
+        setTimeout(() => { wordQueue.shift(); loadQuestion(); }, 500);
     } else {
         btn.style.backgroundColor = "#f44336";
         setTimeout(() => { btn.style.backgroundColor = "#007bff"; }, 500);
     }
 }
 
-loadQuestion();
+function showResult() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h2>Hoàn thành!</h2>
+            <button onclick="location.reload()">Quay lại chọn bài</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
