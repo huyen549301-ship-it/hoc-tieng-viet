@@ -40,7 +40,7 @@ function startLesson(lessonId) {
     loadQuestion();
 }
 
-// 3. Tải câu hỏi (Chỉ lấy dữ liệu trong wordQueue)
+// 3. Tải câu hỏi (Sửa lỗi hiển thị đủ 4 đáp án và chỉ lấy từ bài đang học)
 function loadQuestion() {
     if (wordQueue.length === 0) {
         showResult();
@@ -49,21 +49,31 @@ function loadQuestion() {
     const current = wordQueue[0];
     document.getElementById('question').innerText = `Từ "${current.word}" nghĩa là gì?`;
     
-    // Lấy danh sách tất cả các nghĩa có trong BÀI ĐANG HỌC
+    // 1. Tạo danh sách nghĩa của bài học này
     let allMeaningsInLesson = wordQueue.map(w => w.meaning);
     
+    // 2. Tạo danh sách đáp án (luôn bắt đầu bằng đáp án đúng)
     let options = [current.meaning];
     
-    // Chỉ lấy ngẫu nhiên từ danh sách nghĩa của bài học này
+    // 3. Ép buộc phải có đủ 4 đáp án
     while(options.length < 4) {
+        // Lấy ngẫu nhiên một nghĩa từ bài học
         let rand = allMeaningsInLesson[Math.floor(Math.random() * allMeaningsInLesson.length)];
+        
+        // Chỉ thêm vào nếu đáp án chưa tồn tại trong danh sách để tránh trùng
         if (!options.includes(rand)) {
             options.push(rand);
+        } else {
+            // Nếu đã lấy hết nghĩa trong bài mà vẫn chưa đủ 4, 
+            // lấy thêm từ allWords tổng thể để đảm bảo luôn đủ 4 nút
+            let fallback = allWords[Math.floor(Math.random() * allWords.length)].meaning;
+            if (!options.includes(fallback)) {
+                options.push(fallback);
+            }
         }
-        // Nếu bài học quá ít từ (dưới 4), thoát để tránh lặp vô tận
-        if (options.length === allMeaningsInLesson.length) break;
     }
     
+    // 4. Trộn vị trí các đáp án
     options.sort(() => Math.random() - 0.5);
     
     const optionsEl = document.getElementById('options');
