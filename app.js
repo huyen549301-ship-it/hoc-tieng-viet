@@ -1,11 +1,14 @@
 let allWords = [];
 
-// Tải dữ liệu từ file json
 async function loadData() {
     try {
         const response = await fetch('data.json');
+        if (!response.ok) throw new Error('Không tìm thấy file');
         allWords = await response.json();
-    } catch (e) { alert("Không tải được data.json"); }
+        console.log("Số lượng từ đã tải:", allWords.length); // Kiểm tra trong F12 Console
+    } catch (e) { 
+        alert("Lỗi tải data.json: " + e.message); 
+    }
 }
 loadData();
 
