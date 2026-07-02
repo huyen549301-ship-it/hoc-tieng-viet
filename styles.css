@@ -1,12 +1,22 @@
 body { font-family: 'Segoe UI', sans-serif; background: #e9ecef; text-align: center; padding: 20px; }
 
-/* 1. Menu chọn bài (Dạng lưới 4 cột) */
+/* 1. Menu chọn bài (Tự động co giãn) */
 #app #menu {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    /* Mặc định trên điện thoại: 2 cột */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
     max-width: 800px;
     margin: 20px auto;
+    padding: 0 10px;
+}
+
+/* Trên màn hình máy tính (từ 600px trở lên): 4 cột */
+@media (min-width: 600px) {
+    #app #menu {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
 }
 
 /* 2. Định dạng chung cho mọi nút */
