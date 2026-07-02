@@ -53,11 +53,10 @@ function loadQuestion() {
     // Nếu bài học ít hơn 4 từ, logic này vẫn hoạt động nhưng sẽ lấy trùng
     let options = [current.meaning];
     
-    while(options.length < 4) {
-        // Thay allWords bằng wordQueue để chỉ lấy từ trong cùng bài học
-        let rand = wordQueue[Math.floor(Math.random() * wordQueue.length)].meaning;
-        if (!options.includes(rand)) options.push(rand);
-    }
+while(options.length < 4 && options.length < wordQueue.length) {
+    let rand = wordQueue[Math.floor(Math.random() * wordQueue.length)].meaning;
+    if (!options.includes(rand)) options.push(rand);
+}
     options.sort(() => Math.random() - 0.5);
     
     const optionsEl = document.getElementById('options');
@@ -104,5 +103,5 @@ function showResult() {
     
     // Cập nhật nội dung
     resultText.innerHTML = `Khả năng ghi nhớ: <b>${percent}%</b>`;
-    modal.classList.add('show');
+    document.getElementById('resultModal').style.display = 'flex';
 }
