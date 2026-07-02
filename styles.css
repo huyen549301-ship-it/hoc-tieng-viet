@@ -6,9 +6,10 @@ body { font-family: 'Segoe UI', sans-serif; background: #e9ecef; text-align: cen
     /* Mặc định trên điện thoại: 2 cột */
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    max-width: 800px;
+    width: 100%;
     margin: 20px auto;
     padding: 0 10px;
+    width: 100%;
 }
 
 /* Trên màn hình máy tính (từ 600px trở lên): 4 cột */
