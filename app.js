@@ -40,7 +40,7 @@ function startLesson(lessonId) {
     loadQuestion();
 }
 
-// 3. Tải câu hỏi (Chỉ lấy đáp án nhiễu trong cùng bài học)
+// 3. Tải câu hỏi (Cập nhật để luôn đủ 4 đáp án)
 function loadQuestion() {
     if (wordQueue.length === 0) {
         showResult();
@@ -49,14 +49,24 @@ function loadQuestion() {
     const current = wordQueue[0];
     document.getElementById('question').innerText = `Từ "${current.word}" nghĩa là gì?`;
     
-    // Đảm bảo có ít nhất 4 từ trong bài để tạo 4 đáp án
-    // Nếu bài học ít hơn 4 từ, logic này vẫn hoạt động nhưng sẽ lấy trùng
+    // Luôn bắt đầu với đáp án đúng
     let options = [current.meaning];
     
-while(options.length < 4 && options.length < wordQueue.length) {
-    let rand = wordQueue[Math.floor(Math.random() * wordQueue.length)].meaning;
-    if (!options.includes(rand)) options.push(rand);
-}
+    // Lấy tất cả các nghĩa từ danh sách gốc
+    let allMeanings = allWords.map(w => w.meaning);
+    
+    // Trộn danh sách nghĩa để lấy đáp án nhiễu
+    allMeanings.sort(() => Math.random() - 0.5);
+    
+    // Điền thêm đáp án cho đến khi đủ 4
+    for (let meaning of allMeanings) {
+        if (options.length >= 4) break; 
+        if (!options.includes(meaning)) {
+            options.push(meaning);
+        }
+    }
+    
+    // Trộn vị trí các đáp án để không đoán được đáp án nào là đúng
     options.sort(() => Math.random() - 0.5);
     
     const optionsEl = document.getElementById('options');
@@ -64,7 +74,11 @@ while(options.length < 4 && options.length < wordQueue.length) {
     options.forEach(opt => {
         const btn = document.createElement('button');
         btn.innerText = opt;
-        btn.onclick = () => checkAnswer(opt, current.meaning, btn);
+        // Thêm pointer-events: none sau khi bấm để tránh click nhiều lần
+        btn.onclick = () => {
+            document.getElementById('options').style.pointerEvents = 'none';
+            checkAnswer(opt, current.meaning, btn);
+        };
         optionsEl.appendChild(btn);
     });
 }
