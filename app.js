@@ -40,7 +40,7 @@ function startLesson(lessonId) {
     loadQuestion();
 }
 
-// 3. Tải câu hỏi (Cập nhật để luôn đủ 4 đáp án)
+// 3. Tải câu hỏi (Chỉ lấy đáp án nhiễu trong cùng bài học)
 function loadQuestion() {
     if (wordQueue.length === 0) {
         showResult();
@@ -49,29 +49,14 @@ function loadQuestion() {
     const current = wordQueue[0];
     document.getElementById('question').innerText = `Từ "${current.word}" nghĩa là gì?`;
     
+    // Đảm bảo có ít nhất 4 từ trong bài để tạo 4 đáp án
+    // Nếu bài học ít hơn 4 từ, logic này vẫn hoạt động nhưng sẽ lấy trùng
     let options = [current.meaning];
     
-    let inLesson = wordQueue
-        .filter(w => w.meaning !== current.meaning)
-        .map(w => w.meaning);
-    
-    let allOthers = allWords
-        .filter(w => w.meaning !== current.meaning)
-        .map(w => w.meaning);
-    
-    let pool = [...new Set([...inLesson, ...allOthers])];
-    
-    // Trộn pool
-    pool.sort(() => Math.random() - 0.5);
-    
-    // 5. Bốc ra 3 đáp án khác nhau từ pool
-    for (let meaning of pool) {
-        if (options.length >= 4) break;
-        if (!options.includes(meaning)) {
-            options.push(meaning);
-        }
-    }
-    
+while(options.length < 4 && options.length < wordQueue.length) {
+    let rand = wordQueue[Math.floor(Math.random() * wordQueue.length)].meaning;
+    if (!options.includes(rand)) options.push(rand);
+}
     options.sort(() => Math.random() - 0.5);
     
     const optionsEl = document.getElementById('options');
@@ -79,10 +64,7 @@ function loadQuestion() {
     options.forEach(opt => {
         const btn = document.createElement('button');
         btn.innerText = opt;
-        btn.onclick = () => {
-            document.getElementById('options').style.pointerEvents = 'none';
-            checkAnswer(opt, current.meaning, btn);
-        };
+        btn.onclick = () => checkAnswer(opt, current.meaning, btn);
         optionsEl.appendChild(btn);
     });
 }
